@@ -1,0 +1,20 @@
+{
+  "title": "Legal-Safe Logging",
+  "why": "Agar tum personal data ko logs me dump kar dete ho to privacy violation hoti hai. Logging ka aim debugging aur observability hota hai, not tracking users.",
+  "checklist": [
+    "Log errors, request method, path, status code, and timing.",
+    "Do NOT log phone numbers, passwords, cookies, tokens, or personal identifiers.",
+    "Logs ko 30-90 din ke andar auto delete karo (retention policy).",
+    "Sensitive data ko hash/anonymize karo agar debugging zaruri ho."
+  ],
+  "snippets": [
+    {
+      "label": "Express Safe Logging Middleware",
+      "code": "app.use(async (req, res, next) => {\n  const start = Date.now();\n  res.on('finish', () => {\n    const duration = Date.now() - start;\n    console.log(`[${new Date().toISOString()}]`, {\n      method: req.method,\n      path: req.path,\n      status: res.statusCode,\n      duration: duration + 'ms'\n    });\n  });\n  next();\n});"
+    },
+    {
+      "label": "Log Sanitizer (Remove sensitive info)",
+      "code": "function sanitize(obj) {\n  const clone = { ...obj };\n  delete clone.password;\n  delete clone.token;\n  delete clone.jwt;\n  delete clone.session;\n  return clone;\n}\n\n// example use\nconsole.log('User Update:', sanitize(req.body));"
+    }
+  ]
+}

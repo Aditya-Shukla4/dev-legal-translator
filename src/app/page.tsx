@@ -6,12 +6,14 @@ import cookies from "../data/cookies.json";
 import privacy from "../data/privacy.json";
 import PolicyOutput from "../components/PolicyOutput";
 import dataDelete from "../data/data-delete.json";
+import logging from "../data/logging.json";
 
 export default function Home() {
   const topics = [
     { key: "cookies", label: "Cookies Consent" },
     { key: "privacy", label: "Privacy Policy" },
     { key: "delete", label: "Data Delete / Export" },
+    { key: "logging", label: "Secure Logging" },
   ];
 
   const [selected, setSelected] = useState<string | null>(null);
@@ -85,6 +87,26 @@ export default function Home() {
           </ul>
 
           {dataDelete.snippets.map(
+            (s: { label: string; code: string }, i: number) => (
+              <SnippetBlock key={i} label={s.label} code={s.code} />
+            )
+          )}
+        </>
+      )}
+
+      {/* Logging */}
+      {selected === "logging" && (
+        <>
+          <h2 className="text-2xl font-semibold mt-6">{logging.title}</h2>
+          <p className="text-gray-300 mt-2">{logging.why}</p>
+
+          <ul className="list-disc ml-6 my-4">
+            {logging.checklist.map((item: string, i: number) => (
+              <li key={i}>{item}</li>
+            ))}
+          </ul>
+
+          {logging.snippets.map(
             (s: { label: string; code: string }, i: number) => (
               <SnippetBlock key={i} label={s.label} code={s.code} />
             )
