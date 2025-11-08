@@ -1,0 +1,9 @@
+{
+  "title": "Privacy Policy (India Standard)",
+  "why": "Privacy Policy user ko batata hai ki data kahan store hota hai, kyu collect hota hai, aur user ka control kya hai. Ye trust + compliance ke liye required hai.",
+  "inputs": [
+    { "key": "appName", "label": "App / Website Name" },
+    { "key": "contactEmail", "label": "Contact Email" }
+  ],
+  "template": "This Privacy Policy explains how {{appName}} collects, uses, and protects your personal data. We only collect information necessary to provide our services. If you have concerns, contact us at {{contactEmail}}."
+}

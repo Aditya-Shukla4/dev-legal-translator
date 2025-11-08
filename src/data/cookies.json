@@ -1,0 +1,24 @@
+{
+  "title": "Cookies Consent",
+  "why": "India me non-essential cookies bina user consent ke load karna legal risk create karta hai. Consent banner + revoke option mandatory best practice hai.",
+  "checklist": [
+    "Tracking / analytics scripts ko load karne se pehle consent lo.",
+    "User ko consent revoke karne ka clear option do.",
+    "Consent decision ko localStorage / cookie me securely store karo.",
+    "Consent default = OFF until user accepts."
+  ],
+  "snippets": [
+    {
+      "label": "HTML + JS Consent Banner",
+      "code": "<div id='cookie-banner' style='position:fixed;bottom:0;width:100%;background:#111;color:#fff;padding:12px;text-align:center;'>\n  This website uses cookies for analytics. <button id='accept-cookies' style='margin-left:10px;padding:4px 8px;background:#fff;color:#111;'>Accept</button>\n</div>\n<script>\n  if(localStorage.getItem('cookie-consent')==='accepted'){\n    document.getElementById('cookie-banner').style.display='none';\n  }\n  document.getElementById('accept-cookies').addEventListener('click',function(){\n    localStorage.setItem('cookie-consent','accepted');\n    document.getElementById('cookie-banner').style.display='none';\n  });\n</script>"
+    },
+    {
+      "label": "Express Middleware (Block Tracking Before Consent)",
+      "code": "function cookieConsent(req,res,next){\n  const consent = req.cookies['cookie-consent'];\n  if(!consent){\n    // block analytics scripts / or serve variant without trackers\n  }\n  next();\n}\nmodule.exports = cookieConsent;"
+    },
+    {
+      "label": "Revoke Consent Button Handler",
+      "code": "<button id='revoke-cookies'>Revoke Cookies</button>\n<script>\n  document.getElementById('revoke-cookies').onclick=function(){\n    localStorage.removeItem('cookie-consent');\n    location.reload();\n  }\n</script>"
+    }
+  ]
+}
