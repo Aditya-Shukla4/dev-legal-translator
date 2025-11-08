@@ -1,0 +1,19 @@
+{
+  "title": "User Data Delete & Export API",
+  "why": "Law ke mutabik user ko apna data download aur delete karne ka option hona chahiye. Ye privacy aur trust ke liye essential hai.",
+  "checklist": [
+    "User authentication verify karo pehle.",
+    "Delete ke bad backups me purana data reh sakta hai (ok but time-bound).",
+    "Soft delete ka matlab compliance nahi hota. Real delete ya anonymization karo."
+  ],
+  "snippets": [
+    {
+      "label": "Express: Download User Data",
+      "code": "app.get('/export-user', async (req, res) => {\n  const userId = req.user.id;\n  const data = await db.user.findUnique({ where: { id: userId } });\n  res.json(data);\n});"
+    },
+    {
+      "label": "Express: Delete User Data",
+      "code": "app.delete('/delete-user', async (req, res) => {\n  const userId = req.user.id;\n  await db.user.delete({ where: { id: userId } });\n  res.json({ status: 'deleted' });\n});"
+    }
+  ]
+}

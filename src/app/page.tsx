@@ -5,11 +5,13 @@ import SnippetBlock from "../components/SnippetBlock";
 import cookies from "../data/cookies.json";
 import privacy from "../data/privacy.json";
 import PolicyOutput from "../components/PolicyOutput";
+import dataDelete from "../data/data-delete.json";
 
 export default function Home() {
   const topics = [
     { key: "cookies", label: "Cookies Consent" },
     { key: "privacy", label: "Privacy Policy" },
+    { key: "delete", label: "Data Delete / Export" },
   ];
 
   const [selected, setSelected] = useState<string | null>(null);
@@ -67,6 +69,26 @@ export default function Home() {
           ))}
 
           <PolicyOutput template={privacy.template} values={policyValues} />
+        </>
+      )}
+
+      {/*Delete API */}
+      {selected === "delete" && (
+        <>
+          <h2 className="text-2xl font-semibold mt-6">{dataDelete.title}</h2>
+          <p className="text-gray-300 mt-2">{dataDelete.why}</p>
+
+          <ul className="list-disc ml-6 my-4">
+            {dataDelete.checklist.map((item: string, i: number) => (
+              <li key={i}>{item}</li>
+            ))}
+          </ul>
+
+          {dataDelete.snippets.map(
+            (s: { label: string; code: string }, i: number) => (
+              <SnippetBlock key={i} label={s.label} code={s.code} />
+            )
+          )}
         </>
       )}
     </div>
